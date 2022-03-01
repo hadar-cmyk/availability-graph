@@ -1,64 +1,60 @@
+import numpy as np
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import pandas as pd
 import plotly.graph_objs as go
-import numpy as np
+from dash.dependencies import Input, Output
 
 
+app = dash.Dash()
 
-# Create figure
-fig = go.Figure()
-
-# Add traces, one for each slider step
-for step in np.arange(0, 5, 0.1):
-#     fig.add_trace(
-        go.Scatter(
-            visible=False,
-            line=dict(color="#00CED1", width=6),
-            name="𝜈 = " + str(step),
-            x=np.arange(0, 10, 0.01),
-            y=np.sin(step * np.arange(0, 10, 0.01)))
-#     )
-
-# Make 10th trace visible
-fig.data[10].visible = True
-
-# Create and add slider
-steps = []
-for i in range(len(fig.data)):
-    step = dict(
-        method="update",
-        args=[{"visible": [False] * len(fig.data)},
-              {"title": "Slider switched to step: " + str(i)}],  # layout attribute
-    )
-    step["args"][0]["visible"][i] = True  # Toggle i'th trace to "visible"
-    steps.append(step)
-
-sliders = [dict(
-    active=10,
-    currentvalue={"prefix": "Frequency: "},
-    pad={"t": 50},
-    steps=steps
-)]
-
-# fig.update_layout(
-#     sliders=sliders
-# )
-
-# fig.show()
+df = pd.read_csv(
+    'https://gist.githubusercontent.com/chriddyp/' +
+    '5d1ea79569ed194d432e56108a04d188/raw/' +
+    'a9f9e8076b837d541398e999dcbac2b2826a81f8/'+
+    'gdp-life-exp-2007.csv')
 
 
+slider = dcc.Slider(id='slider', value=2, min=2, max=20, step=1,
+                    marks={key: str(key) for key in range(20)})
 
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-server = app.server
-app.title=tabtitle
 
-app.layout = html.Div([
-    dcc.Graph(figure=fig)
-])
+app.layout = html.Div([dcc.Graph(id='life-exp-vs-gdp'),
+                       slider])
+
+
+@app.callback(Output('life-exp-vs-gdp', 'figure'),
+              [Input('slider', 'value')])
+def make_figure(slider):
+
+    figure = {
+        'data': [
+            go.Scatter(
+                x=df[df['continent'] == i]['gdp per capita'],
+                y=df[df['continent'] == i]['life expectancy'],
+                text=df[df['continent'] == i]['country'],
+                mode='markers',
+                opacity=0.7,
+                marker={
+                    'size': slider,
+                    'line': {'width': 0.5, 'color': 'white'}
+                },
+                name=i
+            ) for i in df.continent.unique()
+        ],
+        'layout': go.Layout(
+            xaxis={'type': 'log', 'title': 'GDP Per Capita'},
+            yaxis={'title': 'Life Expectancy'},
+            margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
+            legend={'x': 0, 'y': 1},
+            hovermode='closest'
+        )
+    }
+
+    return figure
 
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True, use_reloader=False)
+    app.run_server()
