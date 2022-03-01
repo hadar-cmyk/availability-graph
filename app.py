@@ -46,7 +46,8 @@ app.layout = html.Div(children=[
                value=1,
                marks={i: str(i) for i in range(0, 20, 1)}
              )]),
-    html.Div('Code on Github', href=githublink),
+    html.Br(),
+    html.A('Code on Github', href=githublink),
     ])
 
 if __name__ == '__main__':
