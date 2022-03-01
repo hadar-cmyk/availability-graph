@@ -2,6 +2,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
+import numpy as np
 
 ########### Define your variables
 
@@ -17,7 +18,7 @@ githublink='https://github.com/dflymegold/availability-graph'
 
 
 
-function = go.Figure([t,np.sin(t)],go.Layout(title))
+function = go.Figure(date = [go.Scatter(t,np.sin(t))],go.Layout(title))
 
 
 
