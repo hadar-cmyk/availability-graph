@@ -2,46 +2,34 @@ import numpy as np
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import pandas as pd
 import plotly.graph_objs as go
 from dash.dependencies import Input, Output
 
 
 app = dash.Dash()
 
-df = pd.read_csv(
-    'https://gist.githubusercontent.com/chriddyp/' +
-    '5d1ea79569ed194d432e56108a04d188/raw/' +
-    'a9f9e8076b837d541398e999dcbac2b2826a81f8/'+
-    'gdp-life-exp-2007.csv')
 
-
-slider = dcc.Slider(id='slider', value=2, min=2, max=20, step=1,
+slider = dcc.Slider(id='slider', value=1, min=0, max=20, step=1,
                     marks={key: str(key) for key in range(20)})
 
 
-app.layout = html.Div([dcc.Graph(id='life-exp-vs-gdp'),
+app.layout = html.Div([dcc.Graph(id='availability-graph'),
                        slider])
 
 
-@app.callback(Output('life-exp-vs-gdp', 'figure'),
+@app.callback(Output('availbility-graph', 'figure'),
               [Input('slider', 'value')])
+
 def make_figure(slider):
 
     figure = {
         'data': [
-            go.Scatter(
-                x=df[df['continent'] == i]['gdp per capita'],
-                y=df[df['continent'] == i]['life expectancy'],
-                text=df[df['continent'] == i]['country'],
-                mode='markers',
-                opacity=0.7,
-                marker={
-                    'size': slider,
-                    'line': {'width': 0.5, 'color': 'white'}
-                },
-                name=i
-            ) for i in df.continent.unique()
+             go.Scatter(
+            visible=False,
+            line=dict(color="#00CED1", width=6),
+            name="𝜈 = " + str(step),
+            x=np.arange(0, 10, 0.01),
+            y=np.sin(step * np.arange(0, 10, 0.01))))
         ],
         'layout': go.Layout(
             xaxis={'type': 'log', 'title': 'GDP Per Capita'},
