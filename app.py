@@ -21,6 +21,9 @@ function = go.Figure(data=[go.Scatter(x=t, y=np.sin(t))])
 
 
 
+
+
+
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -34,7 +37,17 @@ app.layout = html.Div(children=[
         id='flyingdog',
         figure=function
     ),
+    html.H2 (label1),
+    dcc.Slider(
+        id = 'hours-slider',
+        min = 0,
+        max = 20,
+        value = 1,
+        marks = {i: i for i in range(min, max + 1, step)},
+        step = 1 
+
     html.A('Code on Github', href=githublink),
+ 
     
     ]
 )
