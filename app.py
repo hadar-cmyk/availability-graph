@@ -3,45 +3,46 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.graph_objs as go
-from dash.dependencies import Input, Output
 
 
 app = dash.Dash()
 
 
-slider = dcc.Slider(id='slider', value=1, min=0, max=20, step=1,
-                    marks={key: str(key) for key in range(20)})
+fig = go.Figure()
 
-
-app.layout = html.Div([dcc.Graph(id='availability-graph'),
-                       slider])
-
-
-@app.callback(Output('availbility-graph', 'figure'),
-              [Input('slider', 'value')])
-
-def make_figure(slider):
-
-    figure = {
-        'data': [
-             go.Scatter(
+# Add traces, one for each slider step
+for step in np.arange(0, 5, 0.1):
+        go.Scatter(
             visible=False,
             line=dict(color="#00CED1", width=6),
             name="𝜈 = " + str(step),
             x=np.arange(0, 10, 0.01),
-            y=np.sin(step * np.arange(0, 10, 0.01))))
-        ],
-        'layout': go.Layout(
-            xaxis={'type': 'log', 'title': 'GDP Per Capita'},
-            yaxis={'title': 'Life Expectancy'},
-            margin={'l': 40, 'b': 40, 't': 10, 'r': 10},
-            legend={'x': 0, 'y': 1},
-            hovermode='closest'
-        )
-    }
+            y=np.sin(step * np.arange(0, 10, 0.01)))
 
-    return figure
+# Make 10th trace visible
+fig.data[10].visible = True
 
+# Create and add slider
+steps = []
+for i in range(len(fig.data)):
+    step = dict(
+        method="update",
+        args=[{"visible": [False] * len(fig.data)},
+              {"title": "Slider switched to step: " + str(i)}],  # layout attribute
+    )
+    step["args"][0]["visible"][i] = True  # Toggle i'th trace to "visible"
+    steps.append(step)
+
+sliders = [dict(
+    active=10,
+    currentvalue={"prefix": "Frequency: "},
+    pad={"t": 50},
+    steps=steps
+)]
+
+app.layout = html.Div([
+    dcc.Graph(figure=fig)
+])
 
 
 if __name__ == '__main__':
