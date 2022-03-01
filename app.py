@@ -5,58 +5,59 @@ import plotly.graph_objs as go
 import numpy as np
 
 
-########### Define your variables
-beers=['Chesapeake Stout', 'Snake Dog IPA', 'Imperial Porter', 'Double Dog IPA']
-ibu_values=[35, 60, 85, 75]
-abv_values=[5.4, 7.1, 9.2, 4.3]
-color1='darkred'
-color2='orange'
-mytitle='Availability Graph'
-tabtitle='Graph'
-myheading='This graph show the dependency between failure rate and recovery rate'
-label1='IBU'
-label2='ABV'
-githublink='https://github.com/dflymegold/availability-graph'
-sourceurl='https://www.flyingdog.com/beers/'
 
-########### Set up the chart
-bitterness = go.Bar(
-    x=beers,
-    y=ibu_values,
-    name=label1,
-    marker={'color':color1}
+# Create figure
+fig = go.Figure()
+
+# Add traces, one for each slider step
+for step in np.arange(0, 5, 0.1):
+    fig.add_trace(
+        go.Scatter(
+            visible=False,
+            line=dict(color="#00CED1", width=6),
+            name="𝜈 = " + str(step),
+            x=np.arange(0, 10, 0.01),
+            y=np.sin(step * np.arange(0, 10, 0.01))))
+
+# Make 10th trace visible
+fig.data[10].visible = True
+
+# Create and add slider
+steps = []
+for i in range(len(fig.data)):
+    step = dict(
+        method="update",
+        args=[{"visible": [False] * len(fig.data)},
+              {"title": "Slider switched to step: " + str(i)}],  # layout attribute
+    )
+    step["args"][0]["visible"][i] = True  # Toggle i'th trace to "visible"
+    steps.append(step)
+
+sliders = [dict(
+    active=10,
+    currentvalue={"prefix": "Frequency: "},
+    pad={"t": 50},
+    steps=steps
+)]
+
+fig.update_layout(
+    sliders=sliders
 )
-alcohol = go.Bar(
-    x=beers,
-    y=abv_values,
-    name=label2,
-    marker={'color':color2}
-)
 
-beer_data = [bitterness, alcohol]
-beer_layout = go.Layout(
-    barmode='group',
-    title = mytitle
-)
-
-beer_fig = go.Figure(data=beer_data, layout=beer_layout)
+fig.show()
 
 
-########### Initiate the app
+
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 app.title=tabtitle
 
-########### Set up the layout
-app.layout = html.Div(children=[
-    html.H1(myheading),
-    dcc.Graph(
-        id='flyingdog',
-        figure=beer_fig
-    ), html.A('Code on Github', href=githublink)
-    ]
-)
+app.layout = html.Div([
+    dcc.Graph(figure=fig)
+])
+
+
 
 if __name__ == '__main__':
     app.run_server()
