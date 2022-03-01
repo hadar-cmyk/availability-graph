@@ -11,13 +11,14 @@ fig = go.Figure()
 
 # Add traces, one for each slider step
 for step in np.arange(0, 5, 0.1):
-    fig.add_trace(
+#     fig.add_trace(
         go.Scatter(
             visible=False,
             line=dict(color="#00CED1", width=6),
             name="𝜈 = " + str(step),
             x=np.arange(0, 10, 0.01),
-            y=np.sin(step * np.arange(0, 10, 0.01))))
+            y=np.sin(step * np.arange(0, 10, 0.01)))
+#     )
 
 # Make 10th trace visible
 fig.data[10].visible = True
@@ -40,11 +41,11 @@ sliders = [dict(
     steps=steps
 )]
 
-fig.update_layout(
-    sliders=sliders
-)
+# fig.update_layout(
+#     sliders=sliders
+# )
 
-fig.show()
+# fig.show()
 
 
 
@@ -60,4 +61,4 @@ app.layout = html.Div([
 
 
 if __name__ == '__main__':
-    app.run_server()
+    app.run_server(debug=True, use_reloader=False)
