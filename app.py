@@ -44,7 +44,7 @@ app.layout = html.Div(children=[
         max = 20,
         value = 1,
         marks = {i: i for i in range(min, max + 1, step)},
-        step = 1 
+        step = 1 )
 
     html.A('Code on Github', href=githublink),
  
