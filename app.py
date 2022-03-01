@@ -16,7 +16,7 @@ githublink='https://github.com/dflymegold/availability-graph'
 
 ########### Set up the chart
 
-def lambda (step_):
+def lambda_c (step_):
     return (1-100)/step_
 def mu (step_):
     return 10/step_
@@ -30,7 +30,7 @@ for step in np.arange(0, 2, 0.1):
             line=dict(color="#00CED1", width=6),
             name="𝜈 = " + str(step),
             x=np.linspace(0, 10, 1000),
-            y= mu(step)/(lambda(step)+mu(step))+lambda(step)/(lambda(step)+mu(step))*np.exp(-(lambda(step)+mu(step))*np.arange(0, 10, 0.01))
+            y= mu(step)/(lambda_c(step)+mu(step))+lambda_c(step)/(lambda_c(step)+mu(step))*np.exp(-(lambda_c(step)+mu(step))*np.arange(0, 10, 0.01))
 
     
 fig.data[10].visible = True
