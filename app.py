@@ -25,7 +25,7 @@ for step in np.arange(0, 2, 0.1):
             visible=False,
             line=dict(color="#00CED1", width=6),
             name="𝜈 = " + str(step),
-            x=np.linspace(0, 10, 1000),
+            x=np.linspace(0, 10, 0.01),
             y= (10/step)/((1-100/step)+(10/step))+(1-100/step)/((1-100/step)+(10/step))*np.exp(-((1-100/step)+(10/step))*np.arange(0, 10, 0.01))))
     
     
