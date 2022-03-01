@@ -34,9 +34,8 @@ app.title=tabtitle
 app.layout = html.Div(children=[
     html.H1(myheading),
     dcc.Graph(
-        id='flyingdog',
-        figure=function
-    ),
+        id='graph',
+        figure=function ),
     html.Div([
            html.H6('label1'),
            dcc.Slider(
@@ -46,13 +45,9 @@ app.layout = html.Div(children=[
                step=1,
                value=1,
                marks={i: str(i) for i in range(0, 20, 1)}
-           ),
-
+               ]),
     html.A('Code on Github', href=githublink),
- 
-    
-    ]
-)
+    ])
 
 if __name__ == '__main__':
     app.run_server()
