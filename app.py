@@ -18,7 +18,7 @@ githublink='https://github.com/dflymegold/availability-graph'
 
 
 
-function = go.Figure(date = [go.Scatter(t,np.sin(t))],go.Layout(title))
+function = go.Figure(date = (go.Scatter(t,np.sin(t))),go.Layout(title))
 
 
 
