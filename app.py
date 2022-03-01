@@ -36,9 +36,8 @@ app.layout = html.Div(children=[
     dcc.Graph(
         id='graph',
         figure=function ),
-    html.Div(
-           html.H6('label1'),
-           dcc.Slider(
+        html.H6('label1'),
+         dcc.Slider(
                id='slider-hours',
                min=0,
                max=20,
