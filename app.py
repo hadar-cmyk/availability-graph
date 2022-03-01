@@ -36,7 +36,7 @@ app.layout = html.Div(children=[
     dcc.Graph(
         id='graph',
         figure=function ),
-    html.Div([
+    html.Div(
            html.H6('label1'),
            dcc.Slider(
                id='slider-hours',
@@ -45,7 +45,7 @@ app.layout = html.Div(children=[
                step=1,
                value=1,
                marks={i: str(i) for i in range(0, 20, 1)}
-               ]),
+               ),
     html.A('Code on Github', href=githublink),
     ])
 
