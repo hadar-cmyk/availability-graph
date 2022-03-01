@@ -11,12 +11,12 @@ ibu_values=[35, 60, 85, 75]
 abv_values=[5.4, 7.1, 9.2, 4.3]
 color1='darkred'
 color2='orange'
-mytitle='Beer Comparison'
-tabtitle='beer!'
-myheading='Flying Dog Beers'
+mytitle='Availability Graph'
+tabtitle='Graph'
+myheading='This graph show the dependency between failure rate and recovery rate'
 label1='IBU'
 label2='ABV'
-githublink='https://github.com/austinlasseter/flying-dog-beers'
+githublink='https://github.com/dflymegold/availability-graph'
 sourceurl='https://www.flyingdog.com/beers/'
 
 ########### Set up the chart
@@ -54,7 +54,7 @@ app.layout = html.Div(children=[
     dcc.Graph(
         id='flyingdog',
         figure=beer_fig
-    )
+    ), html.A('Code on Github', href=githublink)
     ]
 )
 
