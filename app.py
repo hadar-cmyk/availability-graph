@@ -37,7 +37,16 @@ app.layout = html.Div(children=[
         id='flyingdog',
         figure=function
     ),
-    html.H2 (label1),
+    html.Div([
+           html.H6('label1'),
+           dcc.Slider(
+               id='slider-hours',
+               min=0,
+               max=20,
+               step=1,
+               value=1,
+               marks={i: str(i) for i in range(0, 20, 1)}
+           ),
 
     html.A('Code on Github', href=githublink),
  
