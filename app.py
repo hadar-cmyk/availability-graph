@@ -18,7 +18,7 @@ githublink='https://github.com/dflymegold/availability-graph'
 
 
 
-function = go.Scatter(t,np.sin(t)))
+function = go.Scatter(t,np.sin(t))
 
 
 
