@@ -16,20 +16,21 @@ githublink='https://github.com/dflymegold/availability-graph'
 
 ########### Set up the chart
 
-
-function = go.Figure(data=[go.Scatter(x=t, y=np.sin(t))])
-
+def lambda (step_):
+    return (1-100)/step_
+def mu (step_):
+    return 10/step_
 
 fig = go.Figure()
 
-for step in np.arange(0, 5, 0.1):
+for step in np.arange(0, 2, 0.1):
     fig.add_trace(
         go.Scatter(
             visible=False,
             line=dict(color="#00CED1", width=6),
             name="𝜈 = " + str(step),
-            x=np.arange(0, 10, 0.01),
-            y=np.sin(step * np.arange(0, 10, 0.01))))
+            x=np.linspace(0, 10, 1000),
+            y= mu(step)/(lambda(step)+mu(step))+lambda(step)/(lambda(step)+mu(step))*np.exp(-(lambda(step)+mu(step))*np.arange(0, 10, 0.01))
 
     
 fig.data[10].visible = True
@@ -72,16 +73,6 @@ app.layout = html.Div(children=[
     dcc.Graph(
         id='graph',
         figure=fig ),
-        html.Div([
-         html.H6(label1),
-         dcc.Slider(
-               id='slider-hours',
-               min=0,
-               max=20,
-               step=1,
-               value=1,
-               marks={i: str(i) for i in range(0, 20, 1)}
-             )]),
     html.Br(),
     html.A('Code on Github', href=githublink),
     ])
