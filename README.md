@@ -12,9 +12,11 @@ Here is an initial link to graph [a link](http://availability-graph.herokuapp.co
 
 1. Fork that repository to make all necessary files available for deploying on heroku  ( push that button  `fork`) / or you could download repo using 
 
-![IMG](https://imgur.com/gallery/MXxwxPV)
+![IMG](https://i.imgur.com/MXxwxPV.png)
 
-![IMG](https://imgur.com/gallery/bMkYjNP)
+
+
+![IMG](https://i.imgur.com/bMkYjNP.png)
 
 
 2. Login to Heroku (or if you don't have an account - register) and create new app 
@@ -31,3 +33,8 @@ Here is an initial link to graph [a link](http://availability-graph.herokuapp.co
 ![Manual](https://miro.medium.com/max/1400/1*NLn1SLM_Ds8mEh7AqK5DgQ.png)
 
 5. Your app is ready for operation, in my case it is available on next [link](http://availability-graph.herokuapp.com/)
+
+
+---
+
+[According to user's tutorial](https://austinlasseter.medium.com/how-to-deploy-a-simple-plotly-dash-app-to-heroku-622a2216eb73)
