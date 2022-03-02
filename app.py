@@ -24,15 +24,15 @@ def lambda_arg (step_):
 def mu_arg (step_):
     return (1/step_)
 
-for step in range(1,100,1):
+for step in np.arange(0,101,1):
     fig.add_trace(
         go.Scatter(
             visible=False,
             line=dict(color="#00CED1", width=6),
             name="𝜈 = " + str(step),
-            x=x,
+            x=np.arange(0,101,1),
             y = ((mu_arg(step)/(lambda_arg(step)+mu_arg(step)))+(lambda_arg(step)/(lambda_arg(step)+mu_arg(step)))*
-                 np.exp(-((lambda_arg(step)+mu_arg(step))*x)))))
+                 1/np.exp(-((lambda_arg(step)+mu_arg(step))*np.arange(0,101,1))))))
 
 fig.data[10].visible = True
 
@@ -41,22 +41,23 @@ for i in range(len(fig.data)):
     step = dict(
         method="update",
         args=[{"visible": [False] * len(fig.data)},
-              {"title": "Slider switched to hour: " + str(i)}],  # layout attribute
+              {"title": "Failure rate (failures per hour): " + str(0.1*i)}],
+        label = ''
     )
     step["args"][0]["visible"][i] = True  # Toggle i'th trace to "visible"
     steps.append(step)
 
 sliders = [dict(
-    active=1,
-    currentvalue={"prefix": "Hours: "},
+    active=0,
     pad={"t": 50},
-    steps=steps
+    steps = steps
 )]
 
 fig.update_layout(
-    sliders=sliders
+    sliders=sliders,
+    xaxis_title="Hours",
+    yaxis_title="Availability",
 )
-
 ########### Initiate the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
