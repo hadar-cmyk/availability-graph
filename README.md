@@ -12,9 +12,10 @@ Here is an initial link to graph [a link](http://availability-graph.herokuapp.co
 
 1. Fork that repository to make all necessary files available for deploying on heroku  ( push that button  `fork`) / or you could download repo using 
 
-![Fork button](https://imgur.com/MXxwxPV)
+![IMG](https://imgur.com/gallery/MXxwxPV)
 
-![Download](https://imgur.com/bMkYjNP)
+![IMG](https://imgur.com/gallery/bMkYjNP)
+
 
 2. Login to Heroku (or if you don't have an account - register) and create new app 
 
