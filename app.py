@@ -30,7 +30,7 @@ for step in np.arange(0,101,0.5):
             name="𝜈 = " + str(step),
             x=np.arange(0,101,1),
             y = ((mu_arg(step)/(lambda_arg(step)+mu_arg(step)))+(lambda_arg(step)/(lambda_arg(step)+mu_arg(step)))*
-                 1/np.exp(-((lambda_arg(step)+mu_arg(step))*np.arange(0,101,1))))))
+                 1/np.exp(((lambda_arg(step)+mu_arg(step))*np.arange(0,101,1))))))
 
 fig.data[10].visible = True
 
